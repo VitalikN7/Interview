@@ -1,4 +1,4 @@
-# Вопросы на собесах Frontend (CSS JS and React)
+# Вопросы на собесах Frontend (CSS, JS and React)
 
 # CSS
 <details>
