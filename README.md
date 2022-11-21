@@ -805,6 +805,67 @@ fetch('https://somesite.com/admin', {
 ##
 </details>
 
+<details>
+<summary>32. В чем разница между методами preventDefault и stopPropagation?</summary>
+
+##
+Метод `preventDefault` отключает стандартную обработку события браузером, а метод `stopPropagation` - распространение события, т.е. запуск родительских по отношению к элементу, в котором возникло событие, обработчиков.
+
+Например, "дефолтная" обработка события `submit` элемента `form` предполагает отправку данных формы и перезагрузку страницы.
+```js
+<form id="formEl">
+  <input type="text" id="inputEl" />
+  <button>Отправить</button>
+</form>
+```
+```js
+formEl.onsubmit = (e) => {
+  e.preventDefault()
+  alert(inputEl.value || 'hello world')
+}
+```
+Событие поднимается от целевого элемента до `window` через всех его предков. Элементы, через которые проходит событие (путь события), содержится в свойстве `event.path`.
+```js
+<div id="outerBox">
+  <div id="innerBox">
+    <button id="firstButtonEl">Сначала нажми на меня</button>
+    <button id="secondButtonEl">А потом на меня</button>
+  </div>
+</div>
+```
+```js
+window.onclick = (e) => {
+  console.log(`Событие #${e.eventNum} достигло объекта "window"`)
+}
+outerBox.onclick = (e) => {
+  console.log(`Событие #${e.eventNum} достигло внешнего контейнера`)
+}
+innerBox.onclick = (e) => {
+  console.log(`Событие #${e.eventNum} достигло внутреннего контейнера`)
+}
+firstButtonEl.onclick = (e) => {
+  console.log('Возникло событие нажатия первой кнопки')
+  e.eventNum = '1'
+}
+secondButtonEl.onclick = (e) => {
+  // !
+  e.stopPropagation()
+  console.log('Возникло событие нажатия второй кнопки')
+  e.eventNum = '2'
+}
+firstButtonEl.click()
+/*
+  Возникло событие нажатия первой кнопки
+  Событие #1 достигло внутреннего контейнера
+  Событие #1 достигло внешнего контейнера
+  Событие #1 достигло объекта "window"
+*/
+secondButtonEl.click()
+// Возникло событие нажатия второй кнопки
+```
+##
+</details>
+
 ---
 
 # React
