@@ -1086,8 +1086,8 @@ function Form() {
   const ref = useRef(null)  // инизиализация ref-объекта
 
   const focus = () => {
-    ref.current.focus()  // форма с одним input и кнопкой по клику, на которую мы хотим устанавливать фокус на этот input.
-  }
+    ref.current.focus()  // форма с одним input и кнопкой по клику,
+  }                      // на которую мы хотим устанавливать фокус на этот input.
 
   return (
     <>
